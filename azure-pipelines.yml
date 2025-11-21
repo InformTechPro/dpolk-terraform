@@ -1,0 +1,32 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Terraform
+    jobs:
+      - job: Deploy
+        steps:
+          - task: TerraformCLI@5
+            displayName: 'Terraform Init'
+            inputs:
+              command: 'init'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              backendType: 'azurerm'
+              backendServiceArm: 'sc-terraform-wif'
+
+          - task: TerraformCLI@5
+            displayName: 'Terraform Plan'
+            inputs:
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              environmentServiceName: 'sc-terraform-wif'
+
+          - task: TerraformCLI@5
+            displayName: 'Terraform Apply'
+            inputs:
+              command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              environmentServiceName: 'sc-terraform-wif'
