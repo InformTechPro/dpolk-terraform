@@ -15,18 +15,18 @@ stages:
               command: 'init'
               workingDirectory: '$(System.DefaultWorkingDirectory)'
               backendType: 'azurerm'
-              backendServiceArm: 'sc-terraform-wif'
+              backendServiceArm: 'ServiceConnectARMWIF'
 
           - task: TerraformCLI@5
             displayName: 'Terraform Plan'
             inputs:
               command: 'plan'
               workingDirectory: '$(System.DefaultWorkingDirectory)'
-              environmentServiceName: 'sc-terraform-wif'
+              environmentServiceName: 'ServiceConnectARMWIF'
 
           - task: TerraformCLI@5
             displayName: 'Terraform Apply'
             inputs:
               command: 'apply'
               workingDirectory: '$(System.DefaultWorkingDirectory)'
-              environmentServiceName: 'sc-terraform-wif'
+              environmentServiceName: 'ServiceConnectARMWIF'
